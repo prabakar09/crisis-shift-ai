@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CrisisShift OS Presentation Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    :root {
+      --bg: #070a11;
+      --card-bg: #121927;
+      --card-border: #233148;
+      --amber: #f59e0b;
+      --cyan: #38bdf8;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Each Slide is an exact 16in x 9in Page */
+    .page {
+      width: 16in;
+      height: 9in;
+      max-width: 16in;
+      max-height: 9in;
+      page-break-after: always;
+      break-after: page;
+      position: relative;
+      overflow: hidden;
+      background: #080c14;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(245, 158, 11, 0.07) 0%, transparent 40%);
+      padding: 0.65in 0.9in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Top Bar */
+    .slide-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+    .brand-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+    .brand-tag span { color: var(--amber); }
+    .track-badge {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* Slide Header */
+    .cat-label {
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+    .main-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .main-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 1200px;
+      margin-bottom: 28px;
+    }
+
+    /* Card Systems */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      flex: 1;
+    }
+    .cards-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      flex: 1;
+    }
+    .cards-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .card-tag {
+      align-self: flex-start;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .tag-red { background: rgba(239, 68, 68, 0.2); color: var(--red); border: 1px solid var(--red); }
+    .tag-amber { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .tag-cyan { background: rgba(56, 189, 248, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .tag-green { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
+
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card li {
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.5;
+      position: relative;
+      padding-left: 22px;
+    }
+    .card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-size: 1.2rem;
+    }
+    .card li strong {
+      color: #fff;
+    }
+
+    /* Workflow Pipeline */
+    .flow-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex: 1;
+    }
+    .flow-box {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 26px;
+    }
+    .flow-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .fb-1 { background: rgba(56, 189, 248, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .fb-2 { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .fb-3 { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
+    .fb-4 { background: rgba(239, 68, 68, 0.2); color: var(--red); border: 1px solid var(--red); }
+    .fb-5 { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #c084fc; }
+    
+    .flow-txt h4 {
+      font-size: 1.2rem;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 3px;
+    }
+    .flow-txt p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Comparison Table */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    .comp-table th, .comp-table td {
+      padding: 18px 24px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 1.05rem;
+    }
+    .comp-table th {
+      background: #172132;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+    .comp-table th:last-child {
+      color: var(--amber);
+    }
+    .comp-table td:last-child {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Slide Bottom Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .slide-num {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 1: Title Slide -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">AGENTIC CINEMA • DIRECTOR TRACK</div>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <div style="display:inline-block; align-self:flex-start; background: rgba(56,189,248,0.15); border: 1px solid var(--cyan); color: var(--cyan); padding: 5px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 20px;">
+        POWERED BY GOOGLE GEMINI 3.8 FLASH SWARM
+      </div>
+      <h1 style="font-family: 'Orbitron', sans-serif; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 12px; color: #fff;">
+        Autonomous Cinema Command & Set Orchestration
+      </h1>
+      <p style="font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; color: var(--amber); font-weight: 700; margin-bottom: 22px;">
+        Transforming Real-World Film Set Chaos into Deterministic Autonomous Mastery
+      </p>
+      <p style="font-size: 1.25rem; color: var(--muted); max-width: 1250px; line-height: 1.6; margin-bottom: 35px;">
+        Grounding film directorial decisions in real-time satellite atmospheric radar, surface asphalt friction physics (&mu;), and instant bilingual Tanglish / regional crew dispatches.
+      </p>
+
+      <div class="cards-4">
+        <div class="card" style="padding: 20px;">
+          <span class="card-tag tag-amber">MISSION</span>
+          <h3>Zero Set Guesswork</h3>
+          <p style="color: var(--muted); font-size: 0.95rem;">Automates split-second shoot cancellations and indoor soundstage relocation.</p>
+        </div>
+        <div class="card" style="padding: 20px;">
+          <span class="card-tag tag-cyan">AI ENGINE</span>
+          <h3>Gemini 3.8 Swarm</h3>
+          <p style="color: var(--muted); font-size: 0.95rem;">4 specialized autonomous agents acting as Director, Scout, Physicist & Dispatcher.</p>
+        </div>
+        <div class="card" style="padding: 20px;">
+          <span class="card-tag tag-green">LOCALIZATION</span>
+          <h3>Bilingual Tanglish</h3>
+          <p style="color: var(--muted); font-size: 0.95rem;">Direct WhatsApp dispatches in Tamil + English for Indian & global film crews.</p>
+        </div>
+        <div class="card" style="padding: 20px;">
+          <span class="card-tag tag-red">FINANCIAL ROI</span>
+          <h3>$50k - $500k Saved</h3>
+          <p style="color: var(--muted); font-size: 0.95rem;">Direct budget loss avoidance per prevented outdoor rainout cancellation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | The Blockbuster Hackathon</div>
+      <div class="slide-num">01 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 2: Executive Summary -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">EXECUTIVE OVERVIEW</div>
+    </div>
+    <div>
+      <div class="cat-label">EXECUTIVE SUMMARY</div>
+      <h2 class="main-title">CrisisShift OS at a Glance</h2>
+      <p class="main-desc">Bridging orbital atmospheric science, terrain physics, and production logistics into an autonomous command cockpit.</p>
+    </div>
+    <div class="cards-3">
+      <div class="card">
+        <span class="card-tag tag-red">THE CORE PROBLEM</span>
+        <h3>Crippling Production Waste</h3>
+        <ul>
+          <li><strong>$500k Daily Loss:</strong> Major film productions bleed $50,000 to $500,000 (Rs 40 Lakhs - 4 Crores) per cancelled outdoor shoot.</li>
+          <li><strong>Stunt & Crane Disasters:</strong> Stunt cars crash on wet roads; 50-foot heavy Technocranes tip over in rain-softened soil.</li>
+          <li><strong>Paper Call Sheets:</strong> Static documents and consumer weather apps fail to provide mathematical risk arbitration.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-cyan">THE INNOVATION</span>
+        <h3>Deterministic AI Swarm</h3>
+        <ul>
+          <li><strong>Gemini 3.8 Swarm:</strong> Multi-agent director arbitrates live radar telemetry deterministically.</li>
+          <li><strong>Physics Engine:</strong> Computes real-time road friction (&mu;) and soil bearing capacity (&sigma;<sub>max</sub>).</li>
+          <li><strong>Cultural Fit:</strong> Instant Tanglish and regional WhatsApp alerts break on-set communication barriers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-green">THE BUSINESS IMPACT</span>
+        <h3>Multi-Crore ROI & Safety</h3>
+        <ul>
+          <li><strong>Sub-15s Execution:</strong> Instant Go/No-Go verdict replaces hours of panicked set arguments.</li>
+          <li><strong>15-25% Insurance Discounts:</strong> Completion bond insurers offer lower premiums for verified risk monitoring.</li>
+          <li><strong>High-Margin Enterprise SaaS:</strong> 85%+ gross profit margin across Indie, Studio, and Slate tiers.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Autonomous Cinema Command</div>
+      <div class="slide-num">02 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 3: Problem Statement -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">01 • THE PROBLEM</div>
+    </div>
+    <div>
+      <div class="cat-label">PROBLEM STATEMENT</div>
+      <h2 class="main-title">Multi-Million Dollar Set Losses & Stunt Hazards</h2>
+      <p class="main-desc">Cinema outdoor shoots face unpredictable micro-climates, disastrous budget blowouts, and life-threatening stunts on unverified terrain.</p>
+    </div>
+    <div class="cards-3">
+      <div class="card">
+        <span class="card-tag tag-red">FINANCIAL BLEED</span>
+        <h3>Rs 40 Lakhs to Rs 4 Crores Lost</h3>
+        <ul>
+          <li><strong>Daily Sunk Costs:</strong> Star cast date commitments, 200+ union crew wages, and Technocrane rentals must be paid even if rain stops shoot.</li>
+          <li><strong>Catastrophic Delays:</strong> A 3-day unexpected rain delay can escalate an entire film's budget by 20% to 30%.</li>
+          <li><strong>Global Pandemic of Waste:</strong> Hollywood and Indian cinema lose hundreds of millions annually to weather chaos.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-amber">LIFE SAFETY HAZARDS</span>
+        <h3>Hydroplaning & Crane Collapse</h3>
+        <ul>
+          <li><strong>Hydroplaning Skids:</strong> High-speed chase sequences on damp asphalt cause severe collisions when friction drops below 0.35.</li>
+          <li><strong>Technocrane Overturns:</strong> Heavy 5-ton camera cranes sink into rain-softened ground, risking fatal outrigger collapses.</li>
+          <li><strong>Sensory Blindspots:</strong> Directors cannot visually estimate road grip coefficients or subsurface soil load capacity.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-cyan">WORKFLOW FAILURE</span>
+        <h3>Static & Inadequate Tools</h3>
+        <ul>
+          <li><strong>Excel & Paper Call Sheets:</strong> Incapable of reacting to sudden radar shifts in real time.</li>
+          <li><strong>Consumer Weather Apps:</strong> Generic city-level apps lack precision atmospheric radar or camera rig engineering context.</li>
+          <li><strong>Communication Bottlenecks:</strong> On South Indian and Bollywood sets, formal English instructions cause delays among ground crews.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Problem Statement</div>
+      <div class="slide-num">03 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 4: Solution & What We Built -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">02 • THE SOLUTION</div>
+    </div>
+    <div>
+      <div class="cat-label">THE SOLUTION & WHAT WE BUILT</div>
+      <h2 class="main-title">The 4-Agent Autonomous Directorial Architecture</h2>
+      <p class="main-desc">Replacing subjective guesswork with deterministic multi-agent telemetry and set orchestration.</p>
+    </div>
+    <div class="cards-4">
+      <div class="card">
+        <span class="card-tag tag-cyan">AGENT 1: SCOUT</span>
+        <h3>🛰️ Orbital Radar Recon</h3>
+        <ul>
+          <li><strong>Open-Meteo Radar:</strong> Real-time precipitation, wind vector & humidity queries.</li>
+          <li><strong>ArcGIS Recon:</strong> High-resolution optical satellite imagery.</li>
+          <li><strong>3D Pydeck Radar:</strong> Live GPS location beacon.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-amber">AGENT 2: PHYSICS</span>
+        <h3>📐 Terrain Physics Engine</h3>
+        <ul>
+          <li><strong>Asphalt Friction (&mu;):</strong> Computes road grip (0.32 wet vs 0.85 dry).</li>
+          <li><strong>Crane Ground Load:</strong> Checks soil bearing capacity (&sigma;<sub>max</sub>).</li>
+          <li><strong>Safety Index:</strong> Dynamic braking distance multipliers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-green">AGENT 3: SWARM</span>
+        <h3>🤖 Gemini 3.8 Director</h3>
+        <ul>
+          <li><strong>Deterministic Decision:</strong> 🟢 GREEN LIGHT vs 🔴 WEATHER HALT.</li>
+          <li><strong>Contingency Action:</strong> Relocates to indoor soundstage instantly.</li>
+          <li><strong>Zero Hallucination:</strong> Grounded in verified math thresholds.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-red">AGENT 4: DISPATCH</span>
+        <h3>📢 Tanglish Dispatcher</h3>
+        <ul>
+          <li><strong>Tanglish First:</strong> Native Tamil + English WhatsApp dispatch.</li>
+          <li><strong>Multilingual Support:</strong> Hindi, Telugu & English call sheet alerts.</li>
+          <li><strong>1-Click PDF Export:</strong> FPDF2 Unicode audit dispatches.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Directorial Swarm</div>
+      <div class="slide-num">04 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 5: How It Works -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">03 • WORKFLOW PIPELINE</div>
+    </div>
+    <div>
+      <div class="cat-label">HOW IT WORKS</div>
+      <h2 class="main-title">5-Stage Deterministic Production Pipeline</h2>
+      <p class="main-desc">From shoot coordinates to emergency crew WhatsApp broadcast in under 15 seconds.</p>
+    </div>
+    <div class="flow-wrap">
+      <div class="flow-box">
+        <div class="flow-badge fb-1">01</div>
+        <div class="flow-txt">
+          <h4>Location & Scene Metadata Ingestion</h4>
+          <p>Director or 1st AD inputs shoot GPS coordinates, scheduled call time, and scene parameters (e.g. Highway Car Chase, Technocrane Rig).</p>
+        </div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-badge fb-2">02</div>
+        <div class="flow-txt">
+          <h4>Orbital Satellite Radar Recon</h4>
+          <p>Agent 1 connects to Open-Meteo and OpenStreetMap atmospheric radar, extracting live precipitation volume, wind gusts, and cloud cover.</p>
+        </div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-badge fb-3">03</div>
+        <div class="flow-txt">
+          <h4>Terrain Physics Calculation</h4>
+          <p>Agent 2 calculates surface asphalt friction (&mu; = 0.32 - 0.85) and tests Technocrane outrigger ground pressure against structural soil bearing limits.</p>
+        </div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-badge fb-4">04</div>
+        <div class="flow-txt">
+          <h4>Gemini 3.8 Swarm Decision Arbitration</h4>
+          <p>Agent 3 synthesizes telemetry. If Rain &gt; 1.0mm or &mu; &lt; 0.40, it triggers an immediate 🔴 RED HALT and routes crew to covered Soundstage B.</p>
+        </div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-badge fb-5">05</div>
+        <div class="flow-txt">
+          <h4>Bilingual Tanglish Crew Dispatch & Audit Log</h4>
+          <p>Agent 4 formats WhatsApp alerts in native Tanglish/English for instant broadcast, auto-logging the full compliance record to SQLite and PDF.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Autonomous Pipeline</div>
+      <div class="slide-num">05 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 6: Core Benefits -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">04 • CORE ADVANTAGES</div>
+    </div>
+    <div>
+      <div class="cat-label">CORE BENEFITS</div>
+      <h2 class="main-title">Why Film Productions Choose CrisisShift OS</h2>
+      <p class="main-desc">Sub-15 second operational speed, zero life-threatening stunt accidents, and seamless set coordination.</p>
+    </div>
+    <div class="cards-3">
+      <div class="card">
+        <span class="card-tag tag-cyan">OPERATIONAL SPEED</span>
+        <h3>⚡ Sub-15s Latency</h3>
+        <ul>
+          <li><strong>Instant Execution:</strong> Orbital radar, friction calculations, and director decision complete in under 15 seconds.</li>
+          <li><strong>Eliminates Set Debates:</strong> No more frantic phone calls between producers, directors, and camera crew in the rain.</li>
+          <li><strong>Real-Time Tracking:</strong> Continuously monitors micro-weather shifts and updates production dispatches automatically.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-green">LIFE & RIG SAFETY</span>
+        <h3>🛡️ Zero Stunt Casualties</h3>
+        <ul>
+          <li><strong>Mathematical Grounding:</strong> Eliminates guesswork by calculating true braking distance and asphalt grip coefficients.</li>
+          <li><strong>Technocrane Protection:</strong> Keeps $500,000 camera cranes and luxury stunt vehicles from sinking into soft mud.</li>
+          <li><strong>Insurance Compliance:</strong> Generates timestamped PDF dispatches for production bond underwriting and liability audits.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-amber">CULTURAL FIT</span>
+        <h3>🗣️ Native Tanglish Edge</h3>
+        <ul>
+          <li><strong>Zero Language Barrier:</strong> Local crew members in Chennai, Hyderabad, and Mumbai grasp safety commands in Tanglish immediately.</li>
+          <li><strong>Colloquial Set Directives:</strong> Plain on-set instructions (e.g. <em>"Vandi slow pannunga, technocrane plates podunga"</em>).</li>
+          <li><strong>WhatsApp Native:</strong> 1-click broadcast format ready for departmental chat groups without delay.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Core Benefits</div>
+      <div class="slide-num">06 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 7: Business Value, ROI & Profit -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">05 • BUSINESS VALUE & PROFIT</div>
+    </div>
+    <div>
+      <div class="cat-label">FINANCIAL IMPACT & REVENUE MODEL</div>
+      <h2 class="main-title">Financial ROI & High-Margin Revenue Profit</h2>
+      <p class="main-desc">Saving massive production budgets while unlocking an enterprise SaaS commercial revenue stream.</p>
+    </div>
+    <div class="cards-2">
+      <div class="card">
+        <span class="card-tag tag-green">DIRECT COST SAVINGS (ROI)</span>
+        <h3>💰 Rs 40 Lakhs to Rs 4 Crores Saved</h3>
+        <ul>
+          <li><strong>Rainout Prevention:</strong> Saves $50,000 to $500,000 (Rs 40 Lakhs - 4 Crores) per averted cancellation day by shifting crew indoors early.</li>
+          <li><strong>15% - 25% Insurance Discounts:</strong> Production completion bond insurers offer lower policy premiums for productions utilizing verified physics risk monitoring.</li>
+          <li><strong>Gear Wreckage Avoidance:</strong> Prevents $200k+ cinema camera bodies and specialized stunt vehicles from wreckage.</li>
+          <li><strong>Crew Overtime Optimization:</strong> Eliminates paid idle standby hours for 200+ crew by orchestrating immediate soundstage fallback.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-amber">COMMERCIAL MONETIZATION & PROFIT</span>
+        <h3>📈 High-Margin SaaS Model</h3>
+        <ul>
+          <li><strong>Indie / Commercials Tier (Rs 25,000 / mo):</strong> Basic atmospheric radar and physics calculator for ad shoots and indie films.</li>
+          <li><strong>Blockbuster Production Tier (Rs 1,50,000 / shoot):</strong> Full 4-agent swarm, Tanglish WhatsApp dispatcher, and PDF audit engine for 90-day schedules.</li>
+          <li><strong>Enterprise Studio Slate ($25,000 / yr):</strong> Unlimited access for major banners (Lyca, Sun Pictures, Dharma, Netflix India).</li>
+          <li><strong>85%+ Gross Profit Margin:</strong> High-efficiency Gemini 3.8 Flash API inference provides near-zero marginal cost per recon run.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Business Value & ROI</div>
+      <div class="slide-num">07 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 8: Market Comparison -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">06 • COMPETITIVE MATRIX</div>
+    </div>
+    <div>
+      <div class="cat-label">COMPETITIVE ADVANTAGE</div>
+      <h2 class="main-title">Why CrisisShift OS Dominates Legacy Methods</h2>
+      <p class="main-desc">Comparing traditional production tools against CrisisShift OS Autonomous Cinema Command.</p>
+    </div>
+    <div style="flex: 1; display: flex; align-items: center;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Feature / Capability</th>
+            <th>Static Call Sheets</th>
+            <th>Generic Weather Apps</th>
+            <th>CrisisShift OS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Real-Time Radar & Satellite</strong></td>
+            <td>❌ None / Paper Only</td>
+            <td>⚠️ City-Level Forecast</td>
+            <td>✅ Live Open-Meteo + ArcGIS Recon</td>
+          </tr>
+          <tr>
+            <td><strong>Surface Friction (&mu;) Physics</strong></td>
+            <td>❌ None</td>
+            <td>❌ None</td>
+            <td>✅ Exact Road & Soil Math Equations</td>
+          </tr>
+          <tr>
+            <td><strong>Autonomous Decision Making</strong></td>
+            <td>❌ Manual Set Debates</td>
+            <td>❌ User Must Interpret</td>
+            <td>✅ Deterministic Gemini 3.8 Swarm</td>
+          </tr>
+          <tr>
+            <td><strong>Set Localization (Tanglish)</strong></td>
+            <td>❌ English / Manual</td>
+            <td>❌ English Only</td>
+            <td>✅ Native Tanglish/Regional Broadcast</td>
+          </tr>
+          <tr>
+            <td><strong>1-Click PDF Audit Records</strong></td>
+            <td>❌ Manual Paperwork</td>
+            <td>❌ None</td>
+            <td>✅ Instant FPDF2 Unicode PDF Export</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Competitive Advantage</div>
+      <div class="slide-num">08 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 9: Vision & Roadmap -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">07 • ROADMAP & VISION</div>
+    </div>
+    <div>
+      <div class="cat-label">ROADMAP & VISION</div>
+      <h2 class="main-title">Scaling to the Global Cinema Operating System</h2>
+      <p class="main-desc">Evolving from location safety to an enterprise-grade Operating System for global film productions.</p>
+    </div>
+    <div class="cards-3">
+      <div class="card">
+        <span class="card-tag tag-green">PHASE 1: CURRENT</span>
+        <h3>Hackathon Launch</h3>
+        <ul>
+          <li><strong>Gemini 3.8 Swarm:</strong> 4-agent autonomous directorial logic.</li>
+          <li><strong>Radar & Physics Engine:</strong> Live Open-Meteo, asphalt friction, and crane load math.</li>
+          <li><strong>Bilingual Localization:</strong> Tanglish WhatsApp dispatcher.</li>
+          <li><strong>Audit Compliance:</strong> SQLite database and FPDF2 PDF exports.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-cyan">PHASE 2: NEAR-TERM</span>
+        <h3>Studio MCP Integration</h3>
+        <ul>
+          <li><strong>MCP Server Adapter:</strong> Model Context Protocol sync with Movie Magic Scheduling.</li>
+          <li><strong>Live Drone Video Feeds:</strong> Direct aerial optical reconnaissance.</li>
+          <li><strong>Twilio WhatsApp API:</strong> Automated simultaneous dispatch to 200+ crew phones.</li>
+          <li><strong>Multi-Camera Tracking:</strong> Dynamic lighting and cloud shadow calculation.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-amber">PHASE 3: LONG-TERM</span>
+        <h3>Global Cinema OS Standard</h3>
+        <ul>
+          <li><strong>Multi-Unit Orchestration:</strong> Autonomous sync between 1st Unit and 2nd Unit stunt teams.</li>
+          <li><strong>AI Stunt Simulations:</strong> Pre-visualized trajectory and friction collision modeling.</li>
+          <li><strong>Automated Insurance Filing:</strong> Instant claim settlement dispatch for weather delays.</li>
+          <li><strong>Enterprise Studio Cockpit:</strong> Global dashboard for multi-film slates.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | Roadmap & Vision</div>
+      <div class="slide-num">09 / 10</div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 10: Conclusion & Call to Action -->
+  <!-- ========================================================= -->
+  <div class="page">
+    <div class="slide-top">
+      <div class="brand-tag">CRISISSHIFT <span>OS</span></div>
+      <div class="track-badge">CONCLUSION</div>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <div style="display:inline-block; align-self:flex-start; background: rgba(245,158,11,0.15); border: 1px solid var(--amber); color: var(--amber); padding: 5px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 20px;">
+        THE BLOCKBUSTER HACKATHON
+      </div>
+      <h1 style="font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; line-height: 1.15; margin-bottom: 15px; color: #fff;">
+        From Chaos on Set to Autonomous Mastery.
+      </h1>
+      <p style="font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; color: var(--cyan); font-weight: 700; margin-bottom: 20px;">
+        CrisisShift OS protects crew lives, saves multi-crore budgets, and brings deterministic AI command to global cinema.
+      </p>
+
+      <div class="cards-3" style="margin-top: 15px;">
+        <div class="card" style="padding: 24px; border-color: var(--cyan);">
+          <span class="card-tag tag-cyan">SPEED</span>
+          <h3>Sub-15s Decision</h3>
+          <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.5;">Instant satellite radar telemetry and physics-backed Go/No-Go verdict.</p>
+        </div>
+        <div class="card" style="padding: 24px; border-color: var(--green);">
+          <span class="card-tag tag-green">SAVINGS</span>
+          <h3>Rs 40L - Rs 4Cr Saved</h3>
+          <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.5;">Proven production cost avoidance per prevented outdoor rainout cancellation.</p>
+        </div>
+        <div class="card" style="padding: 24px; border-color: var(--amber);">
+          <span class="card-tag tag-amber">TECHNOLOGY</span>
+          <h3>Gemini 3.8 Swarm</h3>
+          <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.5;">The ultimate autonomous directorial and safety engine for modern cinema.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>CrisisShift OS | The Blockbuster Hackathon</div>
+      <div class="slide-num">10 / 10</div>
+    </div>
+  </div>
+
+</body>
+</html>

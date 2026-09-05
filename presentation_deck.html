@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrisisShift OS — Autonomous Cinema Command Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(18, 25, 38, 0.85);
+      --card-border: rgba(56, 189, 248, 0.2);
+      --amber: #f59e0b;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+      --rose: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      background-image: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+    }
+
+    /* Presentation Header */
+    header {
+      height: 60px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .brand span {
+      color: var(--amber);
+    }
+    .tag-badge {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: var(--amber);
+      color: #000;
+      border-color: var(--amber);
+    }
+
+    /* Main Slide Container */
+    .deck {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-width: 1350px;
+      max-height: 800px;
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Slide Typography */
+    .slide-cat {
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .slide-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 900px;
+      line-height: 1.5;
+      margin-bottom: 35px;
+    }
+
+    /* Layout Grids */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    /* Modern Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+    }
+    .card-badge {
+      align-self: flex-start;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--rose); border: 1px solid var(--rose); }
+    .badge-amber { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .badge-cyan { background: rgba(56, 189, 248, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: var(--emerald); border: 1px solid var(--emerald); }
+
+    .card h3 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card li {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.45;
+      position: relative;
+      padding-left: 20px;
+    }
+    .card li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-size: 1.1rem;
+    }
+    .card li strong {
+      color: #fff;
+    }
+
+    /* Workflow Pipeline Steps */
+    .flow-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .flow-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 24px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    .flow-item:hover {
+      border-color: var(--amber);
+      background: rgba(30, 41, 59, 0.9);
+    }
+    .flow-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .flow-1 { background: rgba(56, 189, 248, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .flow-2 { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .flow-3 { background: rgba(16, 185, 129, 0.2); color: var(--emerald); border: 1px solid var(--emerald); }
+    .flow-4 { background: rgba(239, 68, 68, 0.2); color: var(--rose); border: 1px solid var(--rose); }
+    .flow-5 { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #c084fc; }
+    
+    .flow-content h4 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .flow-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Comparison Table */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    .comp-table th, .comp-table td {
+      padding: 18px 24px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+    }
+    .comp-table th {
+      background: rgba(30, 41, 59, 0.9);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+    .comp-table th:last-child {
+      color: var(--amber);
+    }
+    .comp-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .comp-table td:last-child {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* Slide Footer Controls */
+    footer {
+      height: 60px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 15, 25, 0.9);
+    }
+    .progress-bar-wrap {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 30px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--amber));
+      width: 12.5%;
+      transition: width 0.3s ease;
+    }
+    .slide-counter {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      min-width: 60px;
+    }
+    .nav-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: var(--amber);
+      color: #000;
+      border-color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      CRISISSHIFT <span>OS</span>
+      <div class="tag-badge">DIRECTOR TRACK • GEMINI 3.8</div>
+    </div>
+    <div class="controls">
+      <span style="font-size: 0.85rem; color: var(--muted);">Use ⬅️ / ➡️ keys to navigate</span>
+      <button class="btn" onclick="toggleFullScreen()">⛶ Fullscreen</button>
+      <a href="CrisisShift_OS_Presentation.pptx" download class="btn" style="text-decoration:none;">⬇ Download PPTX</a>
+    </div>
+  </header>
+
+  <!-- Slide Deck -->
+  <div class="deck">
+
+    <!-- SLIDE 1: Title -->
+    <div class="slide active">
+      <div class="slide-cat">HACKATHON PITCH DECK</div>
+      <h1 class="slide-title">CRISISSHIFT OS</h1>
+      <p style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; color: var(--cyan); margin-bottom: 16px; font-weight: 700;">
+        Autonomous Cinema Command & Set Orchestration
+      </p>
+      <p class="slide-desc">
+        Transforming real-world film set chaos into deterministic autonomous cinema decisions with <strong>Gemini 3.8 Multi-Agent Swarm</strong>, <strong>Real-Time Satellite Atmospheric Radar</strong>, and <strong>Asphalt Surface Physics</strong>.
+      </p>
+      <div class="grid-4" style="margin-top: 10px;">
+        <div class="card" style="padding: 18px;">
+          <span class="card-badge badge-amber">TRACK</span>
+          <h3>Director Track</h3>
+          <p style="color:var(--muted); font-size: 0.9rem;">Agentic Cinema: The Blockbuster Hackathon</p>
+        </div>
+        <div class="card" style="padding: 18px;">
+          <span class="card-badge badge-cyan">AI SWARM</span>
+          <h3>Gemini 3.8 Flash</h3>
+          <p style="color:var(--muted); font-size: 0.9rem;">Multi-Agent Director & Safety Swarm</p>
+        </div>
+        <div class="card" style="padding: 18px;">
+          <span class="card-badge badge-green">LOCALIZATION</span>
+          <h3>Bilingual Tanglish</h3>
+          <p style="color:var(--muted); font-size: 0.9rem;">Zero-friction Tamil + English Crew Dispatches</p>
+        </div>
+        <div class="card" style="padding: 18px;">
+          <span class="card-badge badge-red">IMPACT</span>
+          <h3>₹40L - ₹4Cr Saved</h3>
+          <p style="color:var(--muted); font-size: 0.9rem;">Direct cost avoidance per prevented rainout</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <div class="slide">
+      <div class="slide-cat">01. PROBLEM STATEMENT</div>
+      <h1 class="slide-title">The Real-World Film Set Crisis</h1>
+      <p class="slide-desc">
+        Cinema outdoor shoots face unpredictable micro-climates, disastrous budget overruns, and fatal stunt hazards on unverified terrain.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-badge badge-red">FINANCIAL BLEED</span>
+          <h3>₹40 Lakhs to ₹4 Crores</h3>
+          <ul>
+            <li><strong>Daily Cancellation Loss:</strong> A single rainout day costs $50,000 to $500,000 in cast dates, crew wages & equipment fees.</li>
+            <li><strong>Sunk Equipment Costs:</strong> 50ft Technocranes & Alexa 65 packages sit idle while rental clocks tick.</li>
+            <li><strong>Budget Ballooning:</strong> 3 unpredicted weather delays can escalate overall film budget by 20%+.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber">LIFE SAFETY HAZARDS</span>
+          <h3>Stunt & Rig Disasters</h3>
+          <ul>
+            <li><strong>Hydroplaning:</strong> Stunt vehicles skidding on wet roads due to unseen low friction (&mu; &lt; 0.35).</li>
+            <li><strong>Technocrane Overturning:</strong> Massive 5-ton crane outriggers sinking into rain-softened mud.</li>
+            <li><strong>Sensory Blindspots:</strong> Directors cannot eyeball real friction coefficients or soil load limit.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-cyan">WORKFLOW FAILURE</span>
+          <h3>Static Broken Tools</h3>
+          <ul>
+            <li><strong>Paper / Excel Call Sheets:</strong> Incapable of reacting to sudden radar shifts in real time.</li>
+            <li><strong>Generic Weather Apps:</strong> Consumer weather apps lack camera rig physics or cinematic context.</li>
+            <li><strong>Communication Delay:</strong> On Indian sets, formal English instructions cause confusion among ground crews.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Description & What We Built -->
+    <div class="slide">
+      <div class="slide-cat">02. THE SOLUTION & WHAT WE BUILT</div>
+      <h1 class="slide-title">CrisisShift OS Platform</h1>
+      <p class="slide-desc">
+        An autonomous command cockpit replacing subjective guesswork with deterministic multi-agent telemetry and set dispatches.
+      </p>
+      <div class="grid-4">
+        <div class="card">
+          <span class="card-badge badge-cyan">AGENT 1</span>
+          <h3>🛰️ Orbital Radar Scout</h3>
+          <ul>
+            <li><strong>Open-Meteo Radar:</strong> Live precipitation, wind vector & humidity query.</li>
+            <li><strong>ArcGIS Recon:</strong> High-res optical satellite aerial imagery.</li>
+            <li><strong>3D Pydeck Radar:</strong> Interactive location beacon.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber">AGENT 2</span>
+          <h3>📐 Terrain Physics Engine</h3>
+          <ul>
+            <li><strong>Asphalt Friction (&mu;):</strong> Computes road grip (0.32 wet vs 0.85 dry).</li>
+            <li><strong>Crane Ground Load:</strong> Checks soil bearing capacity (&sigma;<sub>max</sub>).</li>
+            <li><strong>Stunt Safety Index:</strong> Braking distance multipliers.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-green">AGENT 3</span>
+          <h3>🤖 Gemini 3.8 Swarm</h3>
+          <ul>
+            <li><strong>Deterministic Verdict:</strong> 🟢 FULL GREEN LIGHT vs 🔴 WEATHER HALT.</li>
+            <li><strong>Contingency Action:</strong> Relocates to indoor soundstage instantly.</li>
+            <li><strong>Zero Hallucination:</strong> Grounded in verified math thresholds.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-red">AGENT 4</span>
+          <h3>📢 Tanglish Dispatcher</h3>
+          <ul>
+            <li><strong>Tanglish First:</strong> Native Tamil + English WhatsApp dispatch.</li>
+            <li><strong>Multilingual:</strong> Hindi, Telugu & English call sheet alerts.</li>
+            <li><strong>1-Click PDF Export:</strong> FPDF2 insurance audit records.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: How It Works -->
+    <div class="slide">
+      <div class="slide-cat">03. HOW IT WORKS</div>
+      <h1 class="slide-title">Autonomous Multi-Agent Workflow</h1>
+      <p class="slide-desc">
+        From shoot coordinates to crew WhatsApp broadcast in under 15 seconds through 5 deterministic stages.
+      </p>
+      <div class="flow-list">
+        <div class="flow-item">
+          <div class="flow-num flow-1">01</div>
+          <div class="flow-content">
+            <h4>Location & Scene Ingestion</h4>
+            <p>Director or 1st AD inputs shoot GPS coordinates, scene metadata (e.g. Highway Car Chase, Technocrane Rig), and scheduled call time.</p>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num flow-2">02</div>
+          <div class="flow-content">
+            <h4>Orbital Satellite Radar Recon</h4>
+            <p>Agent 1 connects to OpenStreetMap and Open-Meteo atmospheric radar, pulling live precipitation rate, wind gusts, and cloud cover.</p>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num flow-3">03</div>
+          <div class="flow-content">
+            <h4>Terrain Physics Calculation</h4>
+            <p>Agent 2 calculates asphalt friction coefficient (&mu; = 0.32 - 0.85) and tests Technocrane outrigger soil bearing pressure against structural limits.</p>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num flow-4">04</div>
+          <div class="flow-content">
+            <h4>Gemini 3.8 Swarm Decision Arbitration</h4>
+            <p>Agent 3 synthesizes telemetry. If &mu; &lt; 0.40 or rain &gt; 1mm, it triggers a 🔴 WEATHER HALT and activates soundstage relocation blueprint.</p>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num flow-5">05</div>
+          <div class="flow-content">
+            <h4>Bilingual Tanglish Crew Dispatch & Audit Log</h4>
+            <p>Agent 4 formats WhatsApp alerts in native Tanglish/English for instant broadcast, auto-logging the full audit record to SQLite & PDF.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Core Benefits -->
+    <div class="slide">
+      <div class="slide-cat">04. CORE BENEFITS</div>
+      <h1 class="slide-title">Why Film Productions Choose CrisisShift OS</h1>
+      <p class="slide-desc">
+        Maximum shoot efficiency, zero life-threatening stunt accidents, and rapid regional set communication.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-badge badge-cyan">LIGHTNING SPEED</span>
+          <h3>⚡ Sub-15 Second Latency</h3>
+          <ul>
+            <li><strong>Instant Telemetry:</strong> Satellite scout, friction calculation, and swarm decision execute in seconds.</li>
+            <li><strong>Replaces Hours of Debates:</strong> No more arguing between producers, cameramen, and stunt masters in the rain.</li>
+            <li><strong>Live Tracking:</strong> Real-time updates as micro-weather conditions evolve on location.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-green">SAFETY ASSURANCE</span>
+          <h3>🛡️ Zero Stunt Casualties</h3>
+          <ul>
+            <li><strong>Mathematical Rigor:</strong> Eliminates guesswork by calculating actual braking distances and friction equations.</li>
+            <li><strong>Asset Protection:</strong> Keeps $500k Technocranes and luxury stunt camera rigs safe from mud collapse.</li>
+            <li><strong>Insurance Compliance:</strong> Generates timestamped PDF dispatches for production bond underwriting.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber">CULTURAL FIT</span>
+          <h3>🗣️ Native Tanglish Edge</h3>
+          <ul>
+            <li><strong>Zero Language Barrier:</strong> Local crew members in Chennai & Hyderabad grasp safety commands in Tanglish immediately.</li>
+            <li><strong>Actionable Instructions:</strong> "Vandi slow pannunga, technocrane outrigger steel plates podunga" — plain set language.</li>
+            <li><strong>WhatsApp Native:</strong> 1-click broadcast format ready for departmental chat groups.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Business Value & Profit -->
+    <div class="slide">
+      <div class="slide-cat">05. BUSINESS VALUE & PROFIT</div>
+      <h1 class="slide-title">Financial ROI & Revenue Model</h1>
+      <p class="slide-desc">
+        How CrisisShift OS saves massive production budgets and unlocks a high-margin enterprise business model.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <span class="card-badge badge-green">DIRECT COST SAVINGS (ROI)</span>
+          <h3>💰 ₹40 Lakhs to ₹4 Crores Saved</h3>
+          <ul>
+            <li><strong>Rainout Prevention:</strong> Saves ₹40L - ₹4Cr ($50k - $500k) per averted cancellation day by shifting crew indoors early.</li>
+            <li><strong>15% - 25% Insurance Discounts:</strong> Production completion bond insurers offer lower premiums for verified physics risk monitoring.</li>
+            <li><strong>Equipment Repair Avoidance:</strong> Saves $200k+ camera bodies and specialized stunt vehicles from wreckage.</li>
+            <li><strong>Crew Time Optimization:</strong> Eliminates paid idle standby hours for 200+ crew members.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber">COMMERCIAL PROFIT & PRICING</span>
+          <h3>📈 High-Margin SaaS Model</h3>
+          <ul>
+            <li><strong>Indie / Commercials Tier (₹25,000 / mo):</strong> Basic satellite radar and physics calculator for ad shoots and indie films.</li>
+            <li><strong>Blockbuster Production Tier (₹1,50,000 / shoot):</strong> Full multi-agent swarm, Tanglish dispatcher, and PDF audit engine for 90-day schedules.</li>
+            <li><strong>Enterprise Studio Slate ($25,000 / yr):</strong> Unlimited access for major banners (Lyca, Sun Pictures, Dharma, Netflix India).</li>
+            <li><strong>85%+ Gross Margin:</strong> Lightweight cloud infrastructure with high-efficiency Gemini 3.8 inference.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Market Comparison -->
+    <div class="slide">
+      <div class="slide-cat">06. COMPETITIVE ADVANTAGE</div>
+      <h1 class="slide-title">How CrisisShift OS Dominates</h1>
+      <p class="slide-desc">
+        Comparing traditional film production methods against CrisisShift OS Autonomous Cinema Command.
+      </p>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Feature / Capability</th>
+            <th>Static Call Sheets</th>
+            <th>Generic Weather Apps</th>
+            <th>CrisisShift OS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Real-Time Satellite Radar</strong></td>
+            <td>❌ None / Paper</td>
+            <td>⚠️ City-level Forecast</td>
+            <td>✅ Live Open-Meteo + ArcGIS Recon</td>
+          </tr>
+          <tr>
+            <td><strong>Surface Friction (&mu;) Physics</strong></td>
+            <td>❌ None</td>
+            <td>❌ None</td>
+            <td>✅ Exact Road & Soil Math Equations</td>
+          </tr>
+          <tr>
+            <td><strong>Autonomous Decision Making</strong></td>
+            <td>❌ Manual Arguments</td>
+            <td>❌ User must interpret</td>
+            <td>✅ Gemini 3.8 Swarm Arbitration</td>
+          </tr>
+          <tr>
+            <td><strong>Set Localization (Tanglish)</strong></td>
+            <td>❌ English / Manual</td>
+            <td>❌ English Only</td>
+            <td>✅ Native Tanglish/Regional Broadcast</td>
+          </tr>
+          <tr>
+            <td><strong>Automated Audit Reports</strong></td>
+            <td>❌ Manual Paperwork</td>
+            <td>❌ None</td>
+            <td>✅ 1-Click FPDF2 Unicode PDF Records</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SLIDE 8: Roadmap & Vision -->
+    <div class="slide">
+      <div class="slide-cat">07. VISION & ROADMAP</div>
+      <h1 class="slide-title">The Future of Autonomous Cinema</h1>
+      <p class="slide-desc">
+        Scaling from location safety to an enterprise-grade Operating System for global film productions.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-badge badge-green">PHASE 1: CURRENT</span>
+          <h3>Hackathon MVP Launch</h3>
+          <ul>
+            <li>Gemini 3.8 Multi-Agent Swarm</li>
+            <li>Live Open-Meteo & ArcGIS Recon</li>
+            <li>Asphalt friction & soil physics engine</li>
+            <li>Bilingual Tanglish WhatsApp generator</li>
+            <li>FPDF2 Unicode PDF audit reports</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-cyan">PHASE 2: NEAR-TERM</span>
+          <h3>Studio MCP Integration</h3>
+          <ul>
+            <li>Model Context Protocol (MCP) server adapter</li>
+            <li>Direct sync with Movie Magic Scheduling</li>
+            <li>Live drone video telemetry integration</li>
+            <li>Twilio WhatsApp Business bot for 200+ crew</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber">PHASE 3: LONG-TERM</span>
+          <h3>Global Cinema OS Standard</h3>
+          <ul>
+            <li>Simultaneous multi-unit 2nd unit orchestration</li>
+            <li>AI predictive stunt trajectory simulation</li>
+            <li>Automated insurance claim settlement filing</li>
+            <li>Global studio slate enterprise cockpit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <footer>
+    <div class="slide-counter" id="counter">01 / 08</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="nav-btn" onclick="prevSlide()">❮</button>
+      <button class="nav-btn" onclick="nextSlide()">❯</button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const counter = document.getElementById('counter');
+    const progress = document.getElementById('progress');
+
+    function updateDeck() {
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentSlide);
+      });
+      counter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+      progress.style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateDeck();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateDeck();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
