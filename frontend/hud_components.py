@@ -1,7 +1,9 @@
 import streamlit as st
 import pydeck as pdk
 import pandas as pd
-from database.models import TelemetryData, PhysicsAssessment
+import urllib.parse
+from typing import Dict, Any, List
+from database.models import TelemetryData, PhysicsAssessment, CrewContact
 from backend.satellite_service import get_arcgis_satellite_url
 
 def render_system_status_banner():
@@ -254,3 +256,114 @@ def render_dispatch_output(blueprint_text: str, stunt_status: str):
     st.markdown('<div class="dispatch-output-container">', unsafe_allow_html=True)
     st.markdown(blueprint_text)
     st.markdown('</div>', unsafe_allow_html=True)
+
+def render_financial_burn_card(cost_info: Dict[str, Any]):
+    """
+    Renders real-time film production burn rate, delay cost exposure,
+    and autonomous indoor soundstage contingency savings.
+    """
+    risk_color = cost_info.get("risk_color", "#FF9F00")
+    total_loss = cost_info.get("total_financial_loss", "₹0.00")
+    budget_saved = cost_info.get("budget_saved_by_pivot", "₹0.00")
+    
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, rgba(20, 20, 30, 0.96) 0%, rgba(12, 12, 18, 0.98) 100%); border: 2px solid {risk_color}; border-radius: 18px; padding: 22px 26px; margin: 18px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px;">
+            <div>
+                <span style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 900; color: #FFD000; letter-spacing: 0.5px;">
+                    💰 PRODUCTION SET FINANCIAL BURN & DISASTER CONTINGENCY
+                </span>
+                <div style="font-size: 0.8rem; color: #94A3B8; font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
+                    {cost_info.get('location_name', 'Active Location')} // {cost_info.get('logistics_note', '')}
+                </div>
+            </div>
+            <div style="background: rgba(255, 208, 0, 0.15); border: 1px solid #FFD000; color: #FFD000; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 800; padding: 5px 14px; border-radius: 100px;">
+                {cost_info.get('tier_badge', 'TIER 1')}
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 16px;">
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 159, 0, 0.3); border-radius: 12px; padding: 14px;">
+                <div style="font-size: 0.72rem; color: #94A3B8; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Set Burn Rate</div>
+                <div style="font-size: 1.3rem; font-weight: 900; color: #FF9F00; font-family: 'Space Grotesk', sans-serif;">{cost_info.get('hourly_burn', 'N/A')}</div>
+                <div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">Crew: {cost_info.get('crew_size', 65)} Union Techs</div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid {risk_color}55; border-radius: 12px; padding: 14px;">
+                <div style="font-size: 0.72rem; color: #94A3B8; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Delay Loss Exposure</div>
+                <div style="font-size: 1.3rem; font-weight: 900; color: {risk_color}; font-family: 'Space Grotesk', sans-serif;">{total_loss}</div>
+                <div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">Projected Halt: {cost_info.get('halt_hours', 0.0)} hrs</div>
+            </div>
+
+            <div style="background: rgba(0, 255, 102, 0.06); border: 1px solid rgba(0, 255, 102, 0.35); border-radius: 12px; padding: 14px;">
+                <div style="font-size: 0.72rem; color: #00FF66; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Saved by Pivot</div>
+                <div style="font-size: 1.3rem; font-weight: 900; color: #00FF66; font-family: 'Space Grotesk', sans-serif;">{budget_saved}</div>
+                <div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">Autonomous Soundstage Swap</div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px;">
+                <div style="font-size: 0.72rem; color: #94A3B8; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Cost Breakdown</div>
+                <div style="font-size: 0.76rem; color: #E2E8F0; margin-top: 4px; line-height: 1.4;">
+                    Cast: <b>{cost_info.get('cast_cost')}</b> | Crew: <b>{cost_info.get('crew_cost')}</b><br>
+                    Gear: <b>{cost_info.get('gear_cost')}</b> | Permits: <b>{cost_info.get('permit_cost')}</b>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid {risk_color}; border-radius: 8px; padding: 12px 16px; font-size: 0.88rem; color: #F1F5F9; font-weight: 500;">
+            {cost_info.get('action_plan', '')}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def render_crew_dispatch_panel(contacts: List[CrewContact], location_name: str, stunt_status: str):
+    """
+    Renders 1-Click WhatsApp & SMS emergency dispatch cards for film crew department leads.
+    """
+    st.markdown("""
+    <div style="margin: 22px 0 10px 0;">
+        <h4 style="color: #FF9F00; font-family: 'Space Grotesk', sans-serif; font-weight: 800; margin: 0 0 6px 0; letter-spacing: 0.5px;">
+            📲 1-CLICK CREW LEAD WHATSAPP & EMERGENCY CALL SHEET DISPATCH
+        </h4>
+        <p style="color: #94A3B8; font-size: 0.85rem; margin-bottom: 14px;">
+            Directly broadcast autonomous contingency orders to department heads via WhatsApp Web API or instant crew SMS.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    cols = st.columns(len(contacts) if contacts else 1)
+    
+    is_halt = "HALT" in stunt_status.upper() or "RED" in stunt_status.upper()
+    
+    for idx, contact in enumerate(contacts):
+        with cols[idx]:
+            # Tailored message per department
+            if "Stunt" in contact.role:
+                msg = f"🎬 [CRISISSHIFT OS] URGENT TO STUNT DIR {contact.name}: Location {location_name} Stunt Status is {stunt_status}. {'HALT all car chases and secure stunt vehicles immediately due to hydroplane hazard.' if is_halt else 'Full green light for exterior vehicle runs under standard monitoring.'}"
+            elif "DoP" in contact.role or "Camera" in contact.role:
+                msg = f"🎬 [CRISISSHIFT OS] URGENT TO DoP {contact.name}: At {location_name}, weather alert: {stunt_status}. {'Deploy IP67 rain covers on Technocrane and sensitive lenses. Prepare soundstage fallback.' if is_halt else 'Optics clear. Anti-fog warmed. Authorizing crane rig.'}"
+            elif "Assistant Director" in contact.role or "1st AD" in contact.role:
+                msg = f"🎬 [CRISISSHIFT OS] TO 1st AD {contact.name}: Revised Call Sheet dispatch for {location_name}. Status: {stunt_status}. {'Direct all crew & cast convoy to Studio Soundstage A (Scene 88 INT. DAY).' if is_halt else 'Call sheet confirmed on schedule.'}"
+            else:
+                msg = f"🎬 [CRISISSHIFT OS] TO PRODUCTION HEAD {contact.name}: {location_name} operational status {stunt_status}. {'Executing Soundstage pivot to mitigate ₹14L+ idle burn loss.' if is_halt else 'Logistics optimal. Zero delay.'}"
+
+            encoded_msg = urllib.parse.quote(msg)
+            clean_phone = contact.phone.replace("+", "").replace(" ", "").replace("-", "")
+            wa_link = f"https://wa.me/{clean_phone}?text={encoded_msg}"
+
+            st.markdown(f"""
+            <div style="background: rgba(20, 20, 28, 0.9); border: 1px solid rgba(255, 159, 0, 0.25); border-radius: 14px; padding: 14px; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 0.72rem; color: #FF9F00; font-family: 'JetBrains Mono', monospace; font-weight: 700;">{contact.department.upper()}</div>
+                    <div style="font-size: 1rem; font-weight: 800; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; margin: 3px 0;">{contact.name}</div>
+                    <div style="font-size: 0.76rem; color: #94A3B8;">{contact.role}</div>
+                    <div style="font-size: 0.75rem; color: #64748B; font-family: 'JetBrains Mono', monospace; margin: 4px 0;">📞 {contact.phone}</div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <a href="{wa_link}" target="_blank" style="display: block; text-align: center; background: #25D366; color: #050507; font-weight: 800; font-size: 0.78rem; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-family: 'Space Grotesk', sans-serif;">
+                        💬 WhatsApp Alert
+                    </a>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+

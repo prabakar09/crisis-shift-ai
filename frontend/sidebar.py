@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from typing import Dict, Any
 
@@ -7,7 +8,10 @@ def render_sidebar() -> Dict[str, Any]:
     """
     with st.sidebar:
         st.markdown("<h3 style='color: #FF9F00; font-family: Space Grotesk, sans-serif; letter-spacing: 0.5px;'>🎛️ MISSION PARAMETERS</h3>", unsafe_allow_html=True)
-        gemini_key = st.text_input("Google Gemini API Key", type="password")
+        default_key = os.getenv("GEMINI_API_KEY", "")
+        gemini_key = st.text_input("Google Gemini API Key", value=default_key, type="password", help="Enter Google AI Studio Gemini API Key. Can also be set via GEMINI_API_KEY environment variable.")
+        if default_key:
+            st.caption("🟢 GEMINI_API_KEY detected in environment.")
         
         st.markdown("---")
         st.markdown("<h3 style='color: #FF9F00; font-family: Space Grotesk, sans-serif; letter-spacing: 0.5px;'>🌧️ WEATHER TELEMETRY</h3>", unsafe_allow_html=True)

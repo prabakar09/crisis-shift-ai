@@ -1,9 +1,10 @@
 import sqlite3
 import datetime
+from pathlib import Path
 from typing import List, Optional
 from database.models import ReconMissionLog, FilmScene, CrewContact
 
-DB_PATH = "crisis_shift.db"
+DB_PATH = str(Path(__file__).resolve().parent / "crisis_shift.db")
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH)

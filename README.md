@@ -1,164 +1,131 @@
-# 🎬 CrisisShift OS — Autonomous Cinema Command
+# 🎬 CrisisShift OS (v2.0) | Autonomous Cinema Command & Contingency Swarm
 
-[![Gemini 3.8 Flash](https://img.shields.io/badge/Model-Gemini%203.8%20Flash-FF9F00?style=for-the-badge&logo=google)](https://cloud.google.com/vertex-ai)
-[![Python 3.14](https://img.shields.io/badge/Python-3.14-00F0FF?style=for-the-badge&logo=python)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF3366?style=for-the-badge&logo=streamlit)](https://streamlit.io)
-[![SQLite](https://img.shields.io/badge/Database-SQLite3-00FF66?style=for-the-badge&logo=sqlite)](https://sqlite.org)
-[![Hackathon](https://img.shields.io/badge/Devpost-Agentic%20Cinema-FFD000?style=for-the-badge)](https://agentic-cinema.devpost.com/)
+<p align="center">
+  <img src="https://img.shields.io/badge/Architecture-Autonomous_Multi--Agent_Swarm-FF9F00?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Multi-Agent Swarm" />
+  <img src="https://img.shields.io/badge/Engine-Google_Gemini_2.5_Flash-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini 2.5 Flash" />
+  <img src="https://img.shields.io/badge/Physics-Asphalt_Friction_&_Soil_Bearing-00FF66?style=for-the-badge&logo=speedtest&logoColor=white" alt="Physics Engine" />
+  <img src="https://img.shields.io/badge/Finance-Production_Burn_&_Pivot_Savings-FFD000?style=for-the-badge&logo=cashapp&logoColor=white" alt="Production Burn" />
+  <img src="https://img.shields.io/badge/Tests-16%2F16_Passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" alt="Tests Passing" />
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Commercial_Reservation-FF3366?style=for-the-badge&logo=shield" alt="Commercial License" /></a>
+</p>
 
-> **Ground-Truth Production Orchestration // Atmospheric Radar + Surface Asphalt Physics + Multilingual Agent Swarm**
+> **Author & Lead Architect:** **Prabakar A** ([@prabakar09](https://github.com/prabakar09))  
+> **Department:** Artificial Intelligence & Data Science (AI & DS)  
+> **Campus:** KGiSL Institute of Technology (KiTE), Autonomous, Coimbatore  
+> **Ecosystem:** Google Student Community @ KiTE  
 
-Built for the **[Agentic Cinema: The Blockbuster Hackathon](https://agentic-cinema.devpost.com/)** on Devpost.
+> [!IMPORTANT]
+> **🚀 STARTUP & COMMERCIAL INTELLECTUAL PROPERTY NOTICE**  
+> CrisisShift OS is proprietary startup technology architected by **Prabakar A**.  
+> **Commercial Use Restriction:** Any commercial deployment, production pilot, studio adoption, or closed-source distribution is **STRICTLY PROHIBITED** without explicit written permission and commercial licensing.  
+> 📩 **Permission & Commercial Inquiries:** Contact **Prabakar A** at [`prabakar2699@gmail.com`](mailto:prabakar2699@gmail.com) with subject `[CRISISSHIFT OS] Permission Request`.
 
----gfff
+---
 
-## 🏛️ Architecture Overview
+## 💡 The Real-World Cinema Problem
+A high-budget film production is a capital-burning mobile operation. A standard Tier-1 exterior action shoot involves lead actors, 60–100 union technicians (FEFSI/FWICE guild), multi-crore Technocranes, anamorphic camera packages (Arri Alexa / Red V-Raptor), stunt drivers, police roadblock permits, and generator convoys.
 
-CrisisShift OS is engineered as an enterprise-grade **3-Tier Architecture**:
+**Every idle hour burns ₹2.5 to ₹10+ Lakhs.**
+
+When sudden weather anomalies occur (e.g., sudden cloudbursts, heavy sea fog, unpredicted rains):
+* Line Producers panic over burning budgets.
+* Stunt Directors hesitate over hydroplaning hazard thresholds on slick asphalt.
+* Directors and 1st ADs lose 2–4 hours debating next steps due to ego and lack of objective data.
+* **The Result:** Massive financial loss (₹15L–₹50L per day), wrecked call sheets, and severe safety risks.
+
+**CrisisShift OS** solves this by removing hesitation through **cold, automated ground truth**.
+
+---
+
+## 🤖 Multi-Agent System Architecture
 
 ```mermaid
-graph TD
-    User([🎬 Film Director / First AD]) --> Frontend[🎨 Frontend HUD Layer]
-
-    subgraph Frontend [Streamlit + Pydeck + CSS HUD]
-        F1[Cyberpunk / Military HUD]
-        F2[Pydeck 3D Interactive Map]
-        F3[Scene & Call Sheet Editor]
-        F4[Mission Audit Log Viewer]
-        F5[Scenario Benchmark Suite]
-    end
-
-    Frontend --> Backend[⚙️ Backend Services Layer]
-
-    subgraph Backend [Python Multi-Agent Swarm]
-        B1[🛰️ Agent 1: Satellite Scout Engine]
-        B2[🔬 Agent 2: Terrain Physics Engine]
-        B3[🧠 Agent 3: Gemini 3.8 Director Swarm]
-        B4[🗣️ Agent 4: Tanglish / Regional Dispatcher]
-        B5[📄 FPDF2 Unicode PDF Exporter]
-    end
-
-    Backend --> Database[(🗄️ Database Layer: SQLite crisis_shift.db)]
-    Backend --> OpenMeteo[🛰️ Open-Meteo Atmospheric Radar]
-    Backend --> OSM[📍 OpenStreetMap Nominatim Geocoding]
-    Backend --> ArcGIS[📸 ArcGIS World Imagery Satellite]
-    Backend --> Gemini[🤖 Google GenAI Gemini 3.8 Flash]
+flowchart TD
+    A[📍 Target Shooting Location & Scene Breakdown] --> B[Agent 1: Satellite Scout]
+    B -->|Live Open-Meteo & Nominatim Telemetry| C[Agent 2: Terrain Physics Engine]
+    C -->|Asphalt Friction μ & Soil Capacity| D[Agent 3: Production Burn & Pivot Arbitrator]
+    D -->|Location Tier & Hourly Cost Loss| E[Agent 4: Director Swarm & Language Engine]
+    E -->|Gemini 2.5 Flash Multi-Agent Cascade| F{Director Verdict}
+    F -->|Rain > 1.0mm| G[🔴 RED LIGHT: WEATHER HALT]
+    F -->|Clear / Low Moisture| H[🟢 GREEN LIGHT: PROCEED]
+    G --> I[💰 Soundstage Pivot: Save ₹14L+ via Scene 88]
+    H --> J[🎬 Authorize High-Speed Tracking Runs]
+    I --> K[📲 1-Click WhatsApp & SMS Call Sheet Dispatch]
+    J --> K
+    K --> L[📄 Unicode-Safe PDF & Markdown Reports]
+    K --> M[🗄️ SQLite Audit Trail: crisis_shift.db]
 ```
+
+### 🛰️ The 4 Autonomous Agents:
+1. **Agent 1 (Satellite Scout):** Queries live orbital satellite and atmospheric sensors (Open-Meteo & OpenStreetMap Nominatim) for any coordinates worldwide (precipitation mm, wind vector, ambient temperature, relative humidity).
+2. **Agent 2 (Terrain Physics Engine):** Computes ground-truth road asphalt friction ($\mu = 0.32 - 0.85$), hydroplaning crash danger, and Technocrane outrigger soil capacity ($150\text{ kPa}$).
+3. **Agent 3 (Production Burn & Financial Pivot Arbitrator):** Classifies locations into 4 Cinema Tiers (International Hub, Metro Cinema Capital, Hill Station, Regional Center). Models cast wages, union crew fees, rig rentals, and municipal permit costs to quantify exact downtime losses and the financial buffer saved by an immediate soundstage swap.
+4. **Agent 4 (Director Swarm & Regional Dispatcher):** Synthesizes the final directorial call sheet dispatch in **Tanglish**, **Tamil**, **Hindi**, or **English**, complete with 1-click WhatsApp alerts for department leads (Stunt Coordinator, DoP, 1st AD, Line Producer).
 
 ---
 
 ## 🌟 Key Features
 
-1. **🛰️ Real-Time Atmospheric Radar & Satellite Recon:**
-   - Real-time live queries to Open-Meteo & OpenStreetMap Nominatim for any location worldwide.
-   - High-resolution ArcGIS optical satellite view + Pydeck interactive 3D map with bright red tactical beacon.
-
-2. **🔬 Surface Asphalt Friction & Rig Physics Engine:**
-   - Calculates dynamic road friction ($\mu = 0.32$ wet hydroplane hazard to $\mu = 0.85$ optimal dry surface).
-   - Evaluates Technocrane soil bearing load capacity ($\sigma_{max} = 150 \text{ kPa}$) to prevent crane tip-overs.
-
-3. **🧠 Gemini 3.8 Multi-Agent Directorial Swarm:**
-   - Autonomous multi-agent coordination between Scout, Physics, Director, and Dispatcher agents.
-   - Deterministic verdicts: **🟢 FULL GREEN LIGHT** (proceed with stunts) vs **🔴 WEATHER HALT** (protect $500k gear, redirect to covered soundstage).
-
-4. **🌐 Tanglish & Regional Cinema Localization:**
-   - Native bilingual dispatch support for **Tanglish** (Tamil in English script), Tamil, Hindi, Telugu, Malayalam, Kannada, and English.
-   - Enables First ADs to dispatch instant alerts directly to Indian film crew WhatsApp groups without language friction.
-
-5. **📄 Fail-Safe Printable PDF & Markdown Exports:**
-   - 1-click printable PDF production blueprint generation with Unicode emoji compatibility for studio insurance documentation.
-
-6. **🧪 Stress-Test Benchmark Suite:**
-   - 5 pre-configured cinema crisis scenarios (Coimbatore Cloudburst, Chennai Beach Sea Fog, Ooty Mountain Gale, Studio Soundstage Baseline, Madurai Heatwave).
+* **🛰️ Authentic Satellite Optical Optics & Pydeck GPS Radar:** Renders live ArcGIS high-resolution Earth satellite surface tiles alongside an interactive 3D Pydeck radar map displaying a 500m Red Hazard Zone and 1200m Green Safe Staging Perimeter.
+* **💰 Real-Time Production Financial Burn Engine:**
+  * Computes location hourly burn rate (e.g., `₹2.82L/hr` for Coimbatore vs `₹4.26L/hr` for Chennai Metro).
+  * Calculates financial delay exposure vs. budget saved by an autonomous indoor soundstage pivot.
+* **📲 1-Click WhatsApp & SMS Crew Dispatch:** Instantly pre-formats tailored WhatsApp Web messages (`https://wa.me/...`) for key department heads:
+  * **Stunt Coordinator:** Vehicle abort protocols and traction tests.
+  * **DoP (Camera):** IP67 rain covers and anti-fog heating alerts.
+  * **1st AD:** Emergency call sheet re-routing to soundstages.
+  * **Production Head:** Financial mitigation tracking.
+* **🌐 Native Tanglish & Multilingual Cinema Support:** Tailored specifically for Indian film sets (FEFSI guild culture, First Assistant Directors, and regional crew communication).
+* **📄 Unicode-Safe PDF Exporter:** Compiles executive dispatches into downloadable, dark-mode cinema call sheet PDFs using `fpdf2` with automatic emoji Latin-1 sanitization.
+* **🧪 Benchmark Test Suite:** 5 pre-configured cinema crisis scenarios (Coimbatore Highway Chase, Chennai Beach Explosion, Ooty Mountain Drift, Soundstage Baseline, Madurai Heatwave).
 
 ---
 
-## 📁 Repository Structure
+## 🚀 Quick Start
 
-```
-crisis-shift-ai/
-├── app.py                      # Main Streamlit HUD Application
-├── requirements.txt            # Python Dependencies
-├── pyrightconfig.json          # Language Server & Linter Configuration
-├── DEVPOST_SUBMISSION.md       # Devpost Submission Form Content
-├── README.md                   # Project Documentation
-├── crisis_shift.db             # SQLite Production Database
-│
-├── .vscode/
-│   └── settings.json           # IDE & Python Interpreter Settings
-│
-├── database/                   # 🗄️ DATABASE LAYER
-│   ├── __init__.py
-│   ├── models.py               # TelemetryData, PhysicsAssessment, ReconMissionLog
-│   └── db.py                   # SQLite Connection & CRUD Operations
-│
-├── backend/                    # ⚙️ BACKEND SERVICES & AI SWARM
-│   ├── __init__.py
-│   ├── telemetry_service.py    # Live Weather & Asphalt Friction Physics Engine
-│   ├── satellite_service.py    # ArcGIS Satellite Optics URL Generator
-│   ├── agent_swarm.py          # Gemini 3.8 Flash Multi-Agent Swarm
-│   └── pdf_exporter.py         # Unicode-Safe FPDF2 Printable PDF Exporter
-│
-└── frontend/                   # 🎨 FRONTEND UI COMPONENTS
-    ├── __init__.py
-    ├── styles.py               # Cyberpunk / Dark Obsidian HUD Design System
-    ├── sidebar.py              # Sidebar Mission Parameter Controls
-    ├── hud_components.py       # Live HUD, Multi-Agent Card & Pydeck Map
-    ├── scene_manager.py        # Film Scene Database Schedule Manager
-    ├── history_tab.py          # Mission Audit Log Explorer
-    └── test_cases_tab.py       # 5-Scenario Cinema Stress-Test Suite
-```
-
----
-
-## 🚀 Quick Start Guide
-
-### 1. Clone & Navigate
-```bash
-git clone https://github.com/prabakar09/crisis-shift-ai.git
-cd crisis-shift-ai
-```
-
-### 2. Install Dependencies
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Launch Application
+### 2. Configure API Key (Optional)
+Get a free key from [Google AI Studio](https://aistudio.google.com/):
+```bash
+export GEMINI_API_KEY="your_api_key_here"  # Windows PowerShell: $env:GEMINI_API_KEY="your_api_key_here"
+```
+*(Note: CrisisShift OS features a deterministic high-fidelity offline fallback engine that runs even without an active API key).*
+
+### 3. Run Web GUI (Streamlit)
 ```bash
 streamlit run app.py
 ```
 
-### 4. How to Use
-1. Enter your **Google Gemini API Key** in the left sidebar.
-2. Type any shooting location in the world (e.g. `Coimbatore`, `Chennai`, `London`, `Tokyo`).
-3. Enter your scheduled scene requirements.
-4. Click **⚡ EXECUTE REAL-TIME SATELLITE RECON & RUN SWARM**.
-5. Review the ground physics metrics, satellite imagery, and AI Director Blueprint.
-6. Export the report as **📄 PDF (.PDF)** or **📥 Markdown (.MD)**!
+### 4. Run Headless CLI Tool
+```bash
+# Analyze Coimbatore highway cloudburst in Tanglish:
+python cli.py --location "Coimbatore" --mode "rain" --lang "Tanglish"
+
+# Analyze Marina Beach in live weather:
+python cli.py --location "Marina Beach, Chennai" --mode "live" --lang "English"
+```
+
+### 5. Run Automated Tests
+```bash
+pytest projects/07_crisis_shift_ai/tests/ -v
+```
 
 ---
 
-## 📤 Pushing to GitHub (Step-by-Step)
+## 🏛️ Author & Copyright Notice
+Created and architected by **Prabakar A** ([@prabakar09](https://github.com/prabakar09)), Artificial Intelligence & Data Science (AI & DS), KGiSL Institute of Technology (KiTE). Part of the **KGISL-CAMPUS-SOLVERS** engineering initiative.
 
-To upload this project to your public GitHub repository:
+---
 
-```bash
-# 1. Initialize git (if not already done)
-git init
+## 📜 Proprietary Startup License & Permission Inquiries
+Copyright (c) 2026 **Prabakar A**. All Rights Reserved.  
+This software is governed by the **[CRISISSHIFT OS COMMERCIAL RESERVATION & SOURCE-AVAILABLE LICENSE](LICENSE)**.
 
-# 2. Add all files
-git add .
-
-# 3. Commit changes
-git commit -m "feat: CrisisShift OS 3-tier architecture with Gemini 3.8 Swarm & Physics Engine"
-
-# 4. Set main branch
-git branch -M main
-
-# 5. Link your GitHub remote repository
-git remote add origin https://github.com/prabakar09/crisis-shift-ai.git
-
-# 6. Push to GitHub
-git push -u origin main
-```
+> **Commercial Use / Production Deployment:**  
+> If you are a film studio, producer, production company, or tech platform wishing to use, pilot, or integrate CrisisShift OS, you **MUST obtain prior written permission** by contacting the founder:  
+> 📧 **Email:** [prabakar2699@gmail.com](mailto:prabakar2699@gmail.com)  
+> 💬 **Subject:** `[CRISISSHIFT OS] Commercial License / Permission Request`

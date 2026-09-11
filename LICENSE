@@ -1,21 +1,39 @@
-MIT License
+# CRISISSHIFT OS COMMERCIAL RESERVATION & SOURCE-AVAILABLE LICENSE
 
-Copyright (c) 2026 prabakar09
+Copyright (c) 2026 Prabakar A (prabakar2699@gmail.com). All Rights Reserved.  
+Author & Founder: Prabakar A (@prabakar09)  
+Institution: KGiSL Institute of Technology (KiTE), Autonomous, Coimbatore  
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+================================================================================
+IMPORTANT NOTICE: THIS SOFTWARE IS PROPRIETARY STARTUP INTELLECTUAL PROPERTY.
+IT IS NOT COVERED UNDER PERMISSIVE OPEN-SOURCE LICENSES (SUCH AS MIT OR APACHE 2.0).
+================================================================================
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+### 1. GRANT OF LIMITED EVALUATION & PORTFOLIO LICENSE
+Subject to the terms and conditions of this License, the Author grants you a limited, non-exclusive, non-transferable, royalty-free license to:
+(a) View, read, and inspect the source code solely for educational, academic, and evaluation purposes within the Google Student Community and KGiSL Institute of Technology.
+(b) Run the software locally on a personal computer solely for non-commercial demonstration and portfolio evaluation.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### 2. STRICT COMMERCIAL USE & DEPLOYMENT PROHIBITION
+You are STRICTLY PROHIBITED from:
+(a) Using, hosting, deploying, integrating, or running this software (or any derivative work or portion thereof) for any commercial purpose, enterprise workflow, revenue-generating activity, paid film production, or startup venture.
+(b) Selling, renting, sublicensing, leasing, or distributing this software, its multi-agent architecture, ground physics calculations, financial burn models, or call sheet dispatchers.
+(c) Creating closed-source commercial forks, SaaS platforms, or mobile applications derived from this codebase.
+
+### 3. MANDATORY PERMISSION & WRITTEN AUTHORIZATION REQUIREMENT
+If you, your company, studio, film production house, agency, or organization wishes to:
+- Use, pilot, or deploy CrisisShift OS in any commercial film production, event logistics, or studio workflow;
+- Obtain a commercial license, joint venture rights, investment details, or startup integration rights;
+- Fork, adapt, or integrate any part of this software into a commercial product or service;
+
+YOU MUST FIRST SUBMIT A WRITTEN INQUIRY AND OBTAIN AN OFFICIAL, SIGNED COMMERCIAL LICENSE FROM THE AUTHOR:
+
+    Founder & Copyright Holder: Prabakar A
+    Email:   prabakar2699@gmail.com
+    GitHub:  https://github.com/prabakar09
+    Subject: [CRISISSHIFT OS] Commercial License / Pilot Permission Request
+
+Any unauthorized commercial use, deployment, extraction, or reproduction without explicit prior written consent from Prabakar A constitutes copyright infringement, intellectual property violation, and breach of license, actionable under the Indian Copyright Act, 1957, the Information Technology Act, 2000, and international intellectual property conventions.
+
+### 4. NO WARRANTY
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
